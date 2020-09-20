@@ -113,20 +113,20 @@ public class AVL<K extends Comparable<K>, V> extends ArbolBinarioBusqueda<K, V> 
 				nodoAnterior.setHijoIzquierdo(nuevoNodo);
 			}
 			while (!pilaDeAncestros.isEmpty()) {
-		            nodoActual = pilaDeAncestros.pop();
-		            if (!pilaDeAncestros.isEmpty()) {
-		                NodoBinario<K, V> nodoPadre = pilaDeAncestros.pop();
-		                if (nodoActual.getClave().compareTo(nodoPadre.getClave()) > 0) {
-		                    nodoPadre.setHijoDerecho(balancear(nodoActual));
-		                } else {
-		                    nodoPadre.setHijoIzquierdo(balancear(nodoActual));
-		                }
-		                pilaDeAncestros.push(nodoPadre);
+				nodoActual = pilaDeAncestros.pop();
+				if (!pilaDeAncestros.isEmpty()) {
+					NodoBinario<K, V> nodoPadre = pilaDeAncestros.peek();
+					K claveActual = nodoActual.getClave();
+					K clavePadre = nodoPadre.getClave();
+					if (claveActual.compareTo(clavePadre) < 0) {
+						nodoPadre.setHijoIzquierdo(this.balancear(nodoActual));
+					}else{
+						nodoPadre.setHijoDerecho(this.balancear(nodoActual));
+					}
+		            }else {
+		            	this.raiz=this.balancear(nodoActual);
 		            }
-		            else {
-		            	this.raiz=balancear(nodoActual);
-		            }
-		        }
+			}
 		}
 	}
 		
